@@ -1,0 +1,2 @@
+import { TextInput } from "@/components/forms/TextInput";
+export default function RegistrationPage() { return <section><h1 className="mb-6 text-2xl font-bold">Patient Registration</h1><div className="grid max-w-2xl gap-4 rounded-lg bg-white p-6 shadow-sm md:grid-cols-2"><TextInput label="Patient name" /><TextInput label="Phone number" /><TextInput label="Date of birth" type="date" /><button className="rounded bg-blue-700 px-4 py-2 text-white">Register patient</button></div></section>; }

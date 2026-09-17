@@ -1,0 +1,1 @@
+export default function DepartmentMasterPage() { return <section><h1 className="text-2xl font-bold">Department Master</h1><p className="mt-2 text-slate-600">Manage hospital departments.</p></section>; }

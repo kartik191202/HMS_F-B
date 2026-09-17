@@ -1,0 +1,1 @@
+export default function BedManagementPage() { return <section><h1 className="text-2xl font-bold">Bed Management</h1><p className="mt-2 text-slate-600">View wards, rooms, and bed availability.</p></section>; }
