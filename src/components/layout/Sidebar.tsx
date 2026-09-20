@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 const links = [
   ["Dashboard", "/dashboard"],
@@ -7,8 +8,19 @@ const links = [
   ["Billing", "/billing"],
 ];
 export function Sidebar() {
+  const user = useCurrentUser();
+
   return (
     <aside className="w-60 shrink-0 border-r bg-slate-900 p-4 text-white">
+      <div className="mb-6 border-b border-slate-700 pb-4">
+        <p className="truncate text-sm font-semibold">
+          {user?.name ?? "User"}
+        </p>
+        <p className="truncate text-xs text-slate-400">
+          {user?.locationName ?? "Location unavailable"}
+        </p>
+      </div>
+
       <nav className="space-y-2">
         {links.map(([label, href]) => (
           <Link
