@@ -38,6 +38,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## also change in the backend :
 
+# open Web.config
+
         <!--<add name="Access-Control-Allow-Origin" value="*" />--> <!--//kartik new changes-->
         <add name="Access-Control-Allow-Origin" value="http://localhost:3000" />
         <add name="Access-Control-Allow-Credentials" value="true" />
