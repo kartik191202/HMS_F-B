@@ -36,9 +36,9 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
-## also change in the backend :
+# also change in the backend :
 
-# open Web.config
+## open Web.config
 
         <!--<add name="Access-Control-Allow-Origin" value="*" />--> <!--//kartik new changes-->
         <add name="Access-Control-Allow-Origin" value="http://localhost:3000" />
