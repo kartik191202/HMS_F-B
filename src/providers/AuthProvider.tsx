@@ -25,19 +25,25 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
 import type { User } from "@/types/auth.types";
-import { login as loginRequest } from "@/services/auth.service";
+import {
+  login as loginRequest,
+  logout as logoutRequest,
+} from "@/services/auth.service";
 
 type AuthContextValue = {
   user: User | null;
+  isAuthLoading: boolean;
   login: (username: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
+const AUTH_STORAGE_KEY = "hms_authenticated_user";
 
 export function AuthProvider({
   children,
@@ -45,6 +51,21 @@ export function AuthProvider({
   children: React.ReactNode;
 }) {
   const [user, setUser] = useState<User | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
+
+  useEffect(() => {
+    try {
+      const savedUser = sessionStorage.getItem(AUTH_STORAGE_KEY);
+
+      if (savedUser) {
+        setUser(JSON.parse(savedUser) as User);
+      }
+    } catch {
+      sessionStorage.removeItem(AUTH_STORAGE_KEY);
+    } finally {
+      setIsAuthLoading(false);
+    }
+  }, []);
 
   async function login(username: string, password: string) {
     const authenticatedUser = await loginRequest(
@@ -52,20 +73,30 @@ export function AuthProvider({
       password,
     );
 
+    sessionStorage.setItem(
+      AUTH_STORAGE_KEY,
+      JSON.stringify(authenticatedUser),
+    );
     setUser(authenticatedUser);
   }
 
-  function logout() {
-    setUser(null);
+  async function logout() {
+    try {
+      await logoutRequest();
+    } finally {
+      sessionStorage.removeItem(AUTH_STORAGE_KEY);
+      setUser(null);
+    }
   }
 
   const value = useMemo(
     () => ({
       user,
+      isAuthLoading,
       login,
       logout,
     }),
-    [user],
+    [user, isAuthLoading],
   );
 
   return (

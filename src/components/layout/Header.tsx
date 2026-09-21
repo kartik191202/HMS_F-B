@@ -1,9 +1,16 @@
 "use client";
 
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/providers/AuthProvider";
 
 export function Header() {
-  const user = useCurrentUser();
+  const router = useRouter();
+  const { user, logout } = useAuth();
+
+  async function handleLogout() {
+    await logout();
+    router.replace("/login");
+  }
 
   return (
     <header className="flex h-16 items-center justify-between border-b bg-white px-6">
@@ -16,13 +23,22 @@ export function Header() {
         </p>
       </div>
 
-      <div className="text-right text-sm">
-        <p className="font-semibold text-slate-800">
-          {user?.name ?? "User"}
-        </p>
-        <p className="text-xs text-slate-500">
-          {user?.locationName ?? "Location unavailable"}
-        </p>
+      <div className="flex items-center gap-4 text-sm">
+        <div className="text-right">
+          <p className="font-semibold text-slate-800">
+            {user?.name ?? "User"}
+          </p>
+          <p className="text-xs text-slate-500">
+            {user?.locationName ?? "Location unavailable"}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100"
+        >
+          Logout
+        </button>
       </div>
     </header>
   );

@@ -84,9 +84,6 @@ export async function login(
   }
 
   const rawResult = await loginResponse.json();
-  console.log("==================kartik=================")
-  console.log(rawResult)
-  console.log("==================kartik=================")
   if (
     rawResult === "0" ||
     rawResult === "-1" ||
@@ -151,4 +148,17 @@ export async function login(
     locationName: employee.locationname,
     isDoctor: employee.isdoctor,
   };
+}
+
+export async function logout(): Promise<void> {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  if (!apiUrl) {
+    return;
+  }
+
+  await fetch(`${apiUrl}/frmUserLog/Index`, {
+    method: "GET",
+    credentials: "include",
+  });
 }

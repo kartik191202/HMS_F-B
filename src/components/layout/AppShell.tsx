@@ -28,15 +28,15 @@ export function AppShell({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { user } = useAuth();
+  const { user, isAuthLoading } = useAuth();
 
   useEffect(() => {
-    if (!user && pathname !== "/login") {
+    if (!isAuthLoading && !user && pathname !== "/login") {
       router.replace("/login");
     }
-  }, [user, pathname, router]);
+  }, [isAuthLoading, user, pathname, router]);
 
-  if (!user && pathname !== "/login") {
+  if (isAuthLoading || (!user && pathname !== "/login")) {
     return null;
   }
 
