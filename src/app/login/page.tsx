@@ -2,111 +2,28 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Activity, Eye, EyeOff, LockKeyhole, ShieldCheck, User } from "lucide-react";
 import { useAuth } from "@/providers/AuthProvider";
 
 function ActivityIcon({ className = "h-6 w-6" }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      aria-hidden="true"
-    >
-      <path
-        d="M3 12h4l2.2-7 4.1 14 2.2-7H21"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+  return <Activity className={className} aria-hidden="true" />;
 }
 
 function UserIcon() {
-  return (
-    <svg
-      className="h-4 w-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      aria-hidden="true"
-    >
-      <path d="M20 21a8 8 0 0 0-16 0" strokeLinecap="round" />
-      <circle cx="12" cy="7" r="4" />
-    </svg>
-  );
+  return <User className="h-4 w-4" aria-hidden="true" />;
 }
 
 function LockIcon() {
-  return (
-    <svg
-      className="h-4 w-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      aria-hidden="true"
-    >
-      <rect x="4" y="10" width="16" height="10" rx="2" />
-      <path d="M8 10V7a4 4 0 0 1 8 0v3" strokeLinecap="round" />
-    </svg>
-  );
+  return <LockKeyhole className="h-4 w-4" aria-hidden="true" />;
 }
 
 function EyeIcon({ hidden }: { hidden: boolean }) {
-  return hidden ? (
-    <svg
-      className="h-4 w-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      aria-hidden="true"
-    >
-      <path
-        d="m3 3 18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.9 4.2A10.8 10.8 0 0 1 12 4c5 0 8.7 4 10 8a12.7 12.7 0 0 1-3.1 5.1M6.2 6.2A12.8 12.8 0 0 0 2 12c1.3 4 5 8 10 8 1 0 2-.2 2.9-.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ) : (
-    <svg
-      className="h-4 w-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      aria-hidden="true"
-    >
-      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
-      <circle cx="12" cy="12" r="2.5" />
-    </svg>
-  );
+  const Icon = hidden ? EyeOff : Eye;
+  return <Icon className="h-4 w-4" aria-hidden="true" />;
 }
 
 function ShieldIcon() {
-  return (
-    <svg
-      className="h-5 w-5 shrink-0"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      aria-hidden="true"
-    >
-      <path
-        d="M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6l8-3Z"
-        strokeLinejoin="round"
-      />
-      <path
-        d="m8.5 12 2.2 2.2 4.8-4.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+  return <ShieldCheck className="h-5 w-5 shrink-0" aria-hidden="true" />;
 }
 
 export default function LoginPage() {

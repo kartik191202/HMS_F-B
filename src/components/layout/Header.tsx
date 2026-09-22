@@ -13,9 +13,9 @@ export function Header() {
   }
 
   return (
-    <header className="flex h-16 items-center justify-between border-b bg-white px-6">
+    <header className="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-4 shadow-sm sm:px-6">
       <div>
-        <p className="m-0 text-lg font-bold text-blue-700">
+          <p className="m-0 text-lg font-bold text-emerald-700">
           MediNext HMS
         </p>
         <p className="m-0 text-xs text-slate-500">
@@ -35,7 +35,7 @@ export function Header() {
         <button
           type="button"
           onClick={handleLogout}
-          className="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100"
+          className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:bg-slate-100"
         >
           Logout
         </button>
