@@ -10,7 +10,7 @@ const sections = [
     title: "Workspace",
     items: [
       ["Dashboard", "/dashboard"],
-      ["OPD", "/opd"],
+      ["OPD", "/opd/registration"],
       ["IPD", "/ipd"],
     ],
   },
