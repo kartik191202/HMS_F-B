@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useSidebarNavigation } from "@/hooks/useSidebarNavigation";
-import { HeartPulse } from "lucide-react";
+import { ChevronsLeft, ChevronsRight, HeartPulse, Search, X } from "lucide-react";
+import { SidebarNavItem, SidebarNavSection } from "@/lib/data/sidebarNav";
 
 const sections = [
   {
@@ -28,7 +29,7 @@ const sections = [
 export function Sidebar() {
   const pathname = usePathname();
   const navigation = useSidebarNavigation();
-a
+
   return (
     <aside
       className="hms-sidebar"
