@@ -2,10 +2,27 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronsLeft, ChevronsRight, HeartPulse, Search, X } from "lucide-react";
-import type { SidebarNavItem, SidebarNavSection } from "@/lib/data/sidebarNav";
-import { useSidebarNavigation } from "@/hooks/useSidebarNavigation";
+import { useMemo, useState } from "react";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
+const sections = [
+  {
+    title: "Workspace",
+    items: [
+      ["Dashboard", "/dashboard"],
+      ["OPD", "/opd"],
+      ["IPD", "/ipd"],
+    ],
+  },
+  {
+    title: "Operations",
+    items: [
+      ["Billing", "/billing"],
+      ["Patient Search", "/opd/patient-search"],
+      ["Doctor Master", "/opd/masters/doctor"],
+    ],
+  },
+];
 export function Sidebar() {
   const pathname = usePathname();
   const navigation = useSidebarNavigation();
