@@ -1,1 +1,1 @@
-export function Loading() { return <p className="text-sm text-slate-500">Loading...</p>; }
+export function Loading() { return <p className="text-sm text-ink-muted">Loading...</p>; }

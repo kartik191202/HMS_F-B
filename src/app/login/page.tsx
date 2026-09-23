@@ -59,8 +59,8 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen w-full bg-[#f4faf7] text-[#17352b]">
-      <section className="relative hidden w-1/2 flex-col justify-between overflow-hidden bg-[#198754] p-10 text-white lg:flex">
+    <main className="flex min-h-screen w-full bg-brand-soft text-ink">
+      <section className="relative hidden w-1/2 flex-col justify-between overflow-hidden bg-brand p-10 text-white lg:flex">
         <div className="relative z-10 flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/15 backdrop-blur-sm">
             <ActivityIcon />
@@ -102,7 +102,7 @@ export default function LoginPage() {
 
       <section className="flex w-full flex-col items-center justify-center px-6 py-10 lg:w-1/2 lg:p-12">
         <div className="mb-8 flex items-center gap-3 lg:hidden">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#198754] text-white">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand text-white">
             <ActivityIcon />
           </div>
           <span className="text-xl font-semibold tracking-tight">
@@ -111,13 +111,13 @@ export default function LoginPage() {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-md rounded-xl border border-[#d8e9e0] bg-white p-6 shadow-[0_18px_45px_rgba(25,135,84,0.10)] sm:p-7"
+          className="w-full max-w-md rounded-xl border border-brand-line bg-surface p-6 shadow-login sm:p-7"
         >
           <div className="mb-6">
             <h2 className="text-2xl font-semibold tracking-tight">
               Welcome back
             </h2>
-            <p className="mt-1 text-sm text-[#668078]">
+            <p className="mt-1 text-sm text-ink-muted">
               Sign in to access your hospital workspace.
             </p>
           </div>
@@ -127,7 +127,7 @@ export default function LoginPage() {
                 User ID
               </label>
               <div className="relative">
-                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#78948a]">
+                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-subtle">
                   <UserIcon />
                 </span>
                 <input
@@ -137,7 +137,7 @@ export default function LoginPage() {
                   placeholder="Enter your user ID"
                   autoComplete="username"
                   required
-                  className="h-10 w-full rounded-md border border-[#cfe1d8] bg-transparent px-3 pl-10 text-sm outline-none transition-colors placeholder:text-[#9aafa7] focus:border-[#198754] focus:ring-2 focus:ring-[#198754]/15"
+                  className="h-10 w-full rounded-md border border-line bg-transparent px-3 pl-10 text-sm outline-none transition-colors placeholder:text-ink-subtle focus:border-brand focus:ring-2 focus:ring-brand/15"
                 />
               </div>
             </div>
@@ -146,7 +146,7 @@ export default function LoginPage() {
                 Password
               </label>
               <div className="relative">
-                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#78948a]">
+                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-subtle">
                   <LockIcon />
                 </span>
                 <input
@@ -157,13 +157,13 @@ export default function LoginPage() {
                   type={showPassword ? "text" : "password"}
                   autoComplete="current-password"
                   required
-                  className="h-10 w-full rounded-md border border-[#cfe1d8] bg-transparent px-3 pl-10 pr-10 text-sm outline-none transition-colors placeholder:text-[#9aafa7] focus:border-[#198754] focus:ring-2 focus:ring-[#198754]/15"
+                  className="h-10 w-full rounded-md border border-line bg-transparent px-3 pl-10 pr-10 text-sm outline-none transition-colors placeholder:text-ink-subtle focus:border-brand focus:ring-2 focus:ring-brand/15"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((visible) => !visible)}
                   aria-label={showPassword ? "Hide password" : "Show password"}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#78948a] transition-colors hover:text-[#17352b]"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-subtle transition-colors hover:text-ink"
                 >
                   <EyeIcon hidden={!showPassword} />
                 </button>
@@ -181,7 +181,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="mt-6 h-10 w-full rounded-md bg-[#198754] px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#157347] focus:outline-none focus:ring-2 focus:ring-[#198754]/30 disabled:cursor-not-allowed disabled:opacity-60"
+            className="mt-6 h-10 w-full rounded-md bg-brand px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-brand-dark focus:outline-none focus:ring-2 focus:ring-brand/30 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? "Signing in…" : "Sign in"}
           </button>

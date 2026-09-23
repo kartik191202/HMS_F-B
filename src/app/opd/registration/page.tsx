@@ -45,18 +45,18 @@ export default function RegistrationPage() {
       noValidate
       className="mx-auto max-w-6xl space-y-4"
     >
-      <header className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+      <header className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-line-neutral bg-surface p-4 shadow-sm">
         <div>
-          <h1 className="text-lg font-semibold text-slate-800">
+          <h1 className="text-lg font-semibold text-ink-strong">
             Outpatient (OPD) Registration
           </h1>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-ink-subtle">
             Enterprise patient registration workspace
           </p>
         </div>
         <button
           type="submit"
-          className="rounded-md bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700"
+          className="rounded-md bg-brand px-4 py-2 text-xs font-semibold text-white hover:bg-brand-dark"
         >
           Register Patient
         </button>

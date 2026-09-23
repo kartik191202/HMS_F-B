@@ -12,24 +12,24 @@ export default function DashboardPage() {
       ]}
       action="View Reports"
     >
-      <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="text-sm font-semibold text-slate-700">Quick actions</h2>
+      <section className="rounded-lg border border-line-neutral bg-surface p-5 shadow-sm">
+        <h2 className="text-sm font-semibold text-ink-strong">Quick actions</h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
           <a
             href="/opd/registration"
-            className="rounded-md border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-700 hover:bg-emerald-100"
+            className="rounded-md border border-brand-line bg-brand-soft p-4 text-sm font-semibold text-brand-dark hover:bg-brand-line"
           >
             Register patient
           </a>
           <a
             href="/opd/patient-search"
-            className="rounded-md border border-slate-200 p-4 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            className="rounded-md border border-line-neutral p-4 text-sm font-semibold text-ink-strong hover:bg-surface-muted"
           >
             Search patient
           </a>
           <a
             href="/billing/opd-billing"
-            className="rounded-md border border-slate-200 p-4 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            className="rounded-md border border-line-neutral p-4 text-sm font-semibold text-ink-strong hover:bg-surface-muted"
           >
             Open billing
           </a>

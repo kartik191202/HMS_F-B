@@ -41,7 +41,7 @@ export function AppShell({
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-slate-100">
+    <div className="flex min-h-screen flex-col bg-surface-muted">
       <Header />
 
       <div className="flex min-h-0 flex-1">

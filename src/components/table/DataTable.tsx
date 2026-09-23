@@ -19,7 +19,7 @@ export function DataTable<T extends Record<string, unknown>>({
   }));
 
   return (
-    <div className="overflow-hidden rounded border bg-white">
+    <div className="overflow-hidden rounded border border-line-neutral bg-surface">
       <AgGridReact<T>
         rowData={rows}
         columnDefs={columnDefs}

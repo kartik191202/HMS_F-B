@@ -2,129 +2,203 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useMemo, useState } from "react";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { ChevronsLeft, ChevronsRight, HeartPulse, Search, X } from "lucide-react";
+import type { SidebarNavItem, SidebarNavSection } from "@/lib/data/sidebarNav";
+import { useSidebarNavigation } from "@/hooks/useSidebarNavigation";
 
-const sections = [
-  {
-    title: "Workspace",
-    items: [
-      ["Dashboard", "/dashboard"],
-      ["OPD", "/opd"],
-      ["IPD", "/ipd"],
-    ],
-  },
-  {
-    title: "Operations",
-    items: [
-      ["Billing", "/billing"],
-      ["Patient Search", "/opd/patient-search"],
-      ["Doctor Master", "/opd/masters/doctor"],
-    ],
-  },
-];
 export function Sidebar() {
-  const user = useCurrentUser();
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
-  const [query, setQuery] = useState("");
-  const filteredSections = useMemo(
-    () =>
-      sections
-        .map((section) => ({
-          ...section,
-          items: section.items.filter(([label]) =>
-            label.toLowerCase().includes(query.toLowerCase()),
-          ),
-        }))
-        .filter((section) => section.items.length),
-    [query],
-  );
+  const navigation = useSidebarNavigation();
 
   return (
     <aside
-      className={`${collapsed ? "w-[72px]" : "w-64"} shrink-0 border-r border-slate-800 bg-slate-950 text-slate-300 transition-[width] duration-200`}
+      className="hms-sidebar"
+      data-collapsed={navigation.collapsed}
+      data-mounted={navigation.mounted}
     >
-      <div className="flex min-h-screen flex-col">
-        <div className="border-b border-slate-800 px-3 py-4">
-          <div className="flex items-center gap-2">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-emerald-500 text-sm font-bold text-white">
-              M
-            </span>
-            {!collapsed && (
-              <div className="min-w-0">
-                <p className="truncate text-sm font-semibold text-white">
-                  MediNext HMS
-                </p>
-                <p className="truncate text-[10px] uppercase tracking-wide text-slate-500">
-                  Enterprise workspace
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-        {!collapsed && (
-          <div className="px-3 pt-4">
-            <input
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search modules…"
-              className="w-full rounded-md border border-slate-800 bg-slate-900 px-2.5 py-2 text-xs text-slate-200 outline-none placeholder:text-slate-600 focus:border-emerald-600"
-            />
-          </div>
-        )}
-        <nav className="flex-1 space-y-5 overflow-y-auto px-2 py-5">
-          {filteredSections.map((section) => (
-            <div key={section.title}>
-              {!collapsed && (
-                <p className="mb-1.5 px-2 text-[10px] font-semibold uppercase tracking-wide text-slate-500">
-                  {section.title}
-                </p>
-              )}
-              <ul className="space-y-1">
-                {section.items.map(([label, href]) => {
-                  const active =
-                    pathname === href || pathname.startsWith(`${href}/`);
-                  return (
-                    <li key={href}>
-                      <Link
-                        href={href}
-                        title={collapsed ? label : undefined}
-                        className={`flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm transition-colors ${active ? "bg-emerald-500 font-medium text-white" : "hover:bg-slate-800 hover:text-white"} ${collapsed ? "justify-center" : ""}`}
-                      >
-                        <span className="text-xs">●</span>
-                        {!collapsed && (
-                          <span className="truncate">{label}</span>
-                        )}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
-        </nav>
-        {!collapsed && (
-          <div className="border-t border-slate-800 px-3 py-3">
-            <p className="truncate text-xs font-medium text-slate-200">
-              {user?.name ?? "User"}
-            </p>
-            <p className="truncate text-[11px] text-slate-500">
-              {user?.locationName ?? "Location unavailable"}
-            </p>
-          </div>
-        )}
-        <button
-          type="button"
-          onClick={() => {
-            setCollapsed((value) => !value);
-            setQuery("");
-          }}
-          className="border-t border-slate-800 px-3 py-3 text-xs text-slate-400 hover:bg-slate-900 hover:text-white"
-        >
-          {collapsed ? "→" : "← Collapse"}
-        </button>
-      </div>
+      <SidebarBrand collapsed={navigation.collapsed} />
+
+      {!navigation.collapsed && (
+        <SidebarSearch
+          query={navigation.query}
+          onChange={navigation.setQuery}
+        />
+      )}
+
+      <SidebarNavigation
+        pathname={pathname}
+        collapsed={navigation.collapsed}
+        sections={navigation.filteredSections}
+        query={navigation.query}
+      />
+
+      <SidebarCollapseButton
+        collapsed={navigation.collapsed}
+        onClick={navigation.toggleCollapsed}
+      />
     </aside>
+  );
+}
+
+function SidebarBrand({ collapsed }: { collapsed: boolean }) {
+  return (
+    <div className="hms-sidebar__brand">
+      <span className="hms-sidebar__logo" aria-hidden="true">
+        <HeartPulse size={18} />
+      </span>
+      {!collapsed && (
+        <div className="hms-sidebar__brand-copy">
+          <p className="hms-sidebar__brand-name">MediNext HMS</p>
+          <p className="hms-sidebar__brand-meta">Enterprise workspace</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SidebarSearch({
+  query,
+  onChange,
+}: {
+  query: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div className="hms-sidebar__search">
+      <label className="hms-sidebar__search-label" htmlFor="sidebar-search">
+        Search Menu
+      </label>
+      <div className="hms-sidebar__search-control">
+        <Search className="hms-sidebar__search-icon" size={14} aria-hidden="true" />
+        <input
+          id="sidebar-search"
+          type="search"
+          value={query}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder="Search modules, e.g. billing..."
+          className="hms-sidebar__search-input"
+          autoComplete="off"
+        />
+        {query && (
+          <button
+            type="button"
+            onClick={() => onChange("")}
+            className="hms-sidebar__icon-button"
+            aria-label="Clear menu search"
+          >
+            <X size={13} />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function SidebarNavigation({
+  pathname,
+  collapsed,
+  sections,
+  query,
+}: {
+  pathname: string;
+  collapsed: boolean;
+  sections: SidebarNavSection[];
+  query: string;
+}) {
+  return (
+    <nav className="hms-sidebar__navigation" aria-label="Main navigation">
+      {sections.length === 0 ? (
+        <p className="hms-sidebar__empty-state">
+          No menu items match &ldquo;{query}&rdquo;.
+        </p>
+      ) : (
+        sections.map((section) => (
+          <SidebarSection
+            key={section.title}
+            pathname={pathname}
+            collapsed={collapsed}
+            section={section}
+          />
+        ))
+      )}
+    </nav>
+  );
+}
+
+function SidebarSection({
+  pathname,
+  collapsed,
+  section,
+}: {
+  pathname: string;
+  collapsed: boolean;
+  section: SidebarNavSection;
+}) {
+  return (
+    <section className="hms-sidebar__section">
+      {!collapsed && <h2 className="hms-sidebar__section-title">{section.title}</h2>}
+      <ul className="hms-sidebar__list">
+        {section.items.map((item) => (
+          <SidebarItem
+            key={item.href}
+            item={item}
+            pathname={pathname}
+            collapsed={collapsed}
+          />
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function SidebarItem({
+  item,
+  pathname,
+  collapsed,
+}: {
+  item: SidebarNavItem;
+  pathname: string;
+  collapsed: boolean;
+}) {
+  const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+  const Icon = item.icon;
+
+  return (
+    <li>
+      <Link
+        href={item.href}
+        title={collapsed ? item.label : undefined}
+        aria-current={active ? "page" : undefined}
+        className="hms-sidebar__item"
+        data-active={active}
+        data-collapsed={collapsed}
+      >
+        <Icon className="hms-sidebar__item-icon" size={16} aria-hidden="true" />
+        {!collapsed && <span className="hms-sidebar__item-label">{item.label}</span>}
+        {!collapsed && item.badge && <span className="hms-sidebar__item-badge">{item.badge}</span>}
+      </Link>
+    </li>
+  );
+}
+
+function SidebarCollapseButton({
+  collapsed,
+  onClick,
+}: {
+  collapsed: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <div className="hms-sidebar__footer">
+      <button
+        type="button"
+        onClick={onClick}
+        className="hms-sidebar__collapse-button"
+        aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        aria-expanded={!collapsed}
+      >
+        {collapsed ? <ChevronsRight size={16} /> : <><ChevronsLeft size={16} /><span>Collapse</span></>}
+      </button>
+    </div>
   );
 }
